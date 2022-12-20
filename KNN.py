@@ -24,13 +24,16 @@ class KNN:
         self.split_into_training_and_testing()
         self.normalize_features()
         self.convert_to_numpy()
+        self.default_class = self.training_data_output[0]
 
     def shuffle_dataset(self):
         self.dataset = self.dataset.sample(frac=1.0)
 
     def normalize_features(self):
-        self.training_data_input = (self.training_data_input - self.training_data_input.mean()) / self.training_data_input.std()
-        self.testing_data_input = (self.testing_data_input - self.testing_data_input.mean()) / self.testing_data_input.std()
+        self.training_data_input = (
+                                           self.training_data_input - self.training_data_input.mean()) / self.training_data_input.std()
+        self.testing_data_input = (
+                                          self.testing_data_input - self.testing_data_input.mean()) / self.testing_data_input.std()
 
     def split_into_training_and_testing(self):
         training_data_size = len(self.dataset) * 70 // 100
@@ -58,7 +61,7 @@ class KNN:
         # print(results)
         # print(count)
         if count[0] == count[1]:
-            return results[0][1]
+            return self.default_class
         return 0 if count[0] > count[1] else 1
 
     def test(self):
